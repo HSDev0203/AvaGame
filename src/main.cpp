@@ -28,8 +28,8 @@
 
 #include "raylib.h"
 #include "iostream"
-#include <entity.hpp>
-
+#include <amethyst.hpp>
+#include <input.cpp>
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
@@ -40,11 +40,11 @@ int main(void)
     const int screenWidth = 800;
     const int screenHeight = 450;
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-    
-    Texture2D Etext = LoadTexture("../resources/gfx/Box.png");
 
-    entity E = entity(Vector2{0,  0}, Etext );
+
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+
+    amethyst a = amethyst(Vector2{500, 200});
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -56,36 +56,20 @@ int main(void)
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here
         //----------------------------------------------------------------------------------
-
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
-
+            a.drawCollisionBox();
+            a.drawTexture();
             ClearBackground(RAYWHITE);
 
-            E.drawTexture();
-            if(IsKeyDown(KEY_W)){
-                E.position.y += 10;
-            }
-
-            if(IsKeyDown(KEY_S)){
-                E.position.y -= 10;
-            }
-
-            if(IsKeyDown(KEY_A)){
-                E.position.x -= 10;
-            }
-
-            if(IsKeyDown(KEY_D)){
-                E.position.x += 10;
-            }
 
         EndDrawing();
         //----------------------------------------------------------------------------------
     }
 
     // De-Initialization
-    UnloadTexture(Etext);
+    a.~amethyst();
     //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------

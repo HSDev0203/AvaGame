@@ -4,7 +4,9 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/customLib"
+                "${workspaceFolder}/customLib",
+                "${workspaceFolder}/include",
+                "${workspaceFolder}"
             ],
             "defines": [
                 "_DEBUG",
