@@ -36,11 +36,11 @@
 
 void level_1(){
     player pmain;
+    const int NUM_AMETHYSTS = 6;
     amethyst a[] = {
-        Vector2{100, 100}, Vector2{200, 100},
-        Vector2{100, 200}, Vector2{200, 200},
-        Vector2{100, 300}, Vector2{200, 300},
-
+        amethyst(Vector2{100, 100}), amethyst(Vector2{200, 100}),
+        amethyst(Vector2{100, 200}), amethyst(Vector2{200, 200}),
+        amethyst(Vector2{100, 300}), amethyst(Vector2{200, 300})
     };
     /*spider s[] = {
         Vector2{300, 100}
@@ -53,7 +53,7 @@ void level_1(){
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        for(int i = 0; i < int(sizeof(a)); i++){
+        for(int i = 0; i < NUM_AMETHYSTS; i++){
             pmain.cash += a[i].update();
         }
         /*
@@ -62,13 +62,13 @@ void level_1(){
         }
         */
 
-        Rectangle mouseBox = {float(GetMouseX()), float(GetMouseY()), 20, 20};
+        Rectangle mouseBox = {(float)GetMouseX(), (float)GetMouseY(), 20, 20};
        //----------------------------------------------------------------------------------
         BeginDrawing();
-            ClearBackground(RAYWHITE);
-            DrawRectangleRec(mouseBox, RED);
+            ClearBackground(CLITERAL(Color){245, 245, 245, 255});  // RAYWHITE
+            DrawRectangleRec(mouseBox, CLITERAL(Color){230, 41, 55, 255});  // RED
 
-              for(int i = 0; i < int(sizeof(a)); i++){ 
+              for(int i = 0; i < NUM_AMETHYSTS; i++){ 
                 a[i].drawCollisionBox();
                 a[i].drawTexture();
             }
@@ -80,22 +80,14 @@ void level_1(){
                 */
             std::cout << pmain.cash; 
             
-            DrawText(TextFormat("lives: %i", pmain.lives), 300, 300,20, RED);
-            DrawText(TextFormat("cash: %i", pmain.cash), 300, 300,20, RED);
+            DrawText(TextFormat("lives: %i", pmain.lives), 300, 300, 20, CLITERAL(Color){230, 41, 55, 255});
+            DrawText(TextFormat("cash: %i", pmain.cash), 300, 300, 20, CLITERAL(Color){230, 41, 55, 255});
         EndDrawing();
         //----------------------------------------------------------------------------------/** */
     }
 
-    for(int i = 0; i < int(sizeof(a)) - 1; i++){
-        a[i].~amethyst();
-    }
-    /*
-    for(int i = 0; i < int(sizeof(s)) - 1; i++){
-        s[i].~spider();
-    }
-        */
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
+    // Remove manual destructor calls - objects will be destroyed automatically
+    // ... existing code ...
 }
 
 
