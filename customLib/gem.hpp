@@ -2,8 +2,6 @@
 #include "raylib.hpp"
 #include "cmath"
 
-#define GEM_HPP
-
 #pragma once
 
 class gem
@@ -12,14 +10,12 @@ class gem
 public:
     void drawTexture();
     void drawCollisionBox();
-
+    Vector2 position;
+    
 protected:
 
     int value;
-    Texture2D geodeTexture;
-    Texture2D gemTexture;
+    bool isGem;
     Texture2D currentTexture;
-    Vector2 position;
     Rectangle collisionBox;
-
 };

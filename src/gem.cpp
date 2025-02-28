@@ -6,7 +6,7 @@
 
 
 void gem::drawTexture(){
-    DrawTextureV(this->currentTexture, this->position, WHITE);
+    DrawTextureV(currentTexture, position, WHITE);
     return;
 }
 

@@ -1,17 +1,17 @@
-#include <amethyst.hpp>
+#include <spider.hpp>
 #include "player.hpp"
 
-amethyst::amethyst(Vector2 pos){  
+
+spider::spider(Vector2 pos){
+        value = 1;
         gemTexture = LoadTexture("../resources/gfx/Box.png");
-        geodeTexture = LoadTexture("../resources/gfx/Box.png");
-        value = 10;
+        geodeTexture = LoadTexture("../resources/gfx//Zombie.png");
         currentTexture = geodeTexture;
         isGem = false;
         position = pos;
         collisionBox = {position.x, position.y, 50, 50};
-
     }
-int amethyst::update(){
+int spider::update(){
     collisionBox.x = position.x;
     collisionBox.y = position.y;
     if(IsMouseButtonDown(0)){
@@ -23,7 +23,7 @@ int amethyst::update(){
     }
     return 0;
 }
-amethyst::~amethyst(){
+spider::~spider(){
     UnloadTexture(gemTexture);
     UnloadTexture(geodeTexture);
     UnloadTexture(currentTexture);

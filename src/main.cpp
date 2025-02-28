@@ -25,16 +25,83 @@
 *   Copyright (c) 2013-2025 Ramon Santamaria (@raysan5)
 *
 ********************************************************************************************/
-
 #include "raylib.h"
 #include "iostream"
+#include <spider.hpp>
 #include <amethyst.hpp>
-#include <input.cpp>
+#include <player.hpp>
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
+
+void level_1(){
+    player pmain;
+    amethyst a[] = {
+        Vector2{100, 100}, Vector2{200, 100},
+        Vector2{100, 200}, Vector2{200, 200},
+        Vector2{100, 300}, Vector2{200, 300},
+
+    };
+    /*spider s[] = {
+        Vector2{300, 100}
+    };*/
+    pmain.cash = 0;
+
+    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    //--------------------------------------------------------------------------------------
+
+    // Main game loop
+    while (!WindowShouldClose())    // Detect window close button or ESC key
+    {
+        for(int i = 0; i < int(sizeof(a)); i++){
+            pmain.cash += a[i].update();
+        }
+        /*
+        for(int i = 0; i < int(sizeof(a)); i++){
+            pmain.lives -= s[i].update();
+        }
+        */
+
+        Rectangle mouseBox = {float(GetMouseX()), float(GetMouseY()), 20, 20};
+       //----------------------------------------------------------------------------------
+        BeginDrawing();
+            ClearBackground(RAYWHITE);
+            DrawRectangleRec(mouseBox, RED);
+
+              for(int i = 0; i < int(sizeof(a)); i++){ 
+                a[i].drawCollisionBox();
+                a[i].drawTexture();
+            }
+            /*
+              for(int i = 0; i < int(sizeof(s)); i++){ 
+                s[i].drawCollisionBox();
+                s[i].drawTexture();
+            }
+                */
+            std::cout << pmain.cash; 
+            
+            DrawText(TextFormat("lives: %i", pmain.lives), 300, 300,20, RED);
+            DrawText(TextFormat("cash: %i", pmain.cash), 300, 300,20, RED);
+        EndDrawing();
+        //----------------------------------------------------------------------------------/** */
+    }
+
+    for(int i = 0; i < int(sizeof(a)) - 1; i++){
+        a[i].~amethyst();
+    }
+    /*
+    for(int i = 0; i < int(sizeof(s)) - 1; i++){
+        s[i].~spider();
+    }
+        */
+    // De-Initialization
+    //--------------------------------------------------------------------------------------
+}
+
+
 int main(void)
 {
+
     // Initialization
     //--------------------------------------------------------------------------------------
     const int screenWidth = 800;
@@ -43,34 +110,8 @@ int main(void)
 
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    level_1();
 
-    amethyst a = amethyst(Vector2{500, 200});
-
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
-
-    // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
-        // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
-            a.drawCollisionBox();
-            a.drawTexture();
-            ClearBackground(RAYWHITE);
-
-
-        EndDrawing();
-        //----------------------------------------------------------------------------------
-    }
-
-    // De-Initialization
-    a.~amethyst();
-    //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 

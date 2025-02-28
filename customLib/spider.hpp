@@ -6,14 +6,14 @@
 
 #pragma once
 
-class amethyst: public gem
+class spider: public gem
 {
 private:
+    static Texture2D geodeTexture;
     static Texture2D gemTexture;
-    static Texture2D geodeTexture; 
 public:
-    amethyst(Vector2 pos);
+    spider(Vector2 pos);
     int update();
-    ~amethyst();
+    ~spider();
 
 };
