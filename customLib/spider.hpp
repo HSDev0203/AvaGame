@@ -9,11 +9,10 @@
 class spider: public gem
 {
 private:
-    static Texture2D geodeTexture;
-    static Texture2D gemTexture;
-public:
-    spider(Vector2 pos);
-    int update();
-    ~spider();
 
+public:
+    int update();
+    static void unloadTextures();
+    static void loadTextures();
+    spider(Vector2 pos);
 };

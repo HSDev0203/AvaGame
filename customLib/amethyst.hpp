@@ -9,11 +9,10 @@
 class amethyst: public gem
 {
 private:
-    static Texture2D gemTexture;
-    static Texture2D geodeTexture; 
-public:
-    amethyst(Vector2 pos);
-    int update();
-    ~amethyst();
 
+public:
+    int update();
+    static void unloadTextures();
+    static void loadTextures();
+    amethyst(Vector2 pos);
 };

@@ -36,16 +36,23 @@
 
 void level_1(){
     player pmain;
+    pmain.cash = 0;
+    
+    amethyst::loadTextures();
     amethyst a[] = {
-        Vector2{100, 100}, Vector2{200, 100},
-        Vector2{100, 200}, Vector2{200, 200},
-        Vector2{100, 300}, Vector2{200, 300},
+        amethyst(Vector2{100, 100}), amethyst(Vector2{200, 100}),
+        amethyst(Vector2{100, 200}), amethyst(Vector2{200, 200}),
+        amethyst(Vector2{100, 300}), amethyst(Vector2({200, 300})),
 
     };
-    /*spider s[] = {
-        Vector2{300, 100}
-    };*/
-    pmain.cash = 0;
+    int amethystCount = sizeof(a) / sizeof(a[0]);
+
+    
+    spider::loadTextures();
+    spider s[] = {
+        spider(Vector2{300, 100}),
+    };
+    int spiderCount = sizeof(s) / sizeof(s[0]);
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -53,48 +60,35 @@ void level_1(){
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        for(int i = 0; i < int(sizeof(a)); i++){
+        for(int i = 0; i < amethystCount; i++){
             pmain.cash += a[i].update();
         }
-        /*
-        for(int i = 0; i < int(sizeof(a)); i++){
-            pmain.lives -= s[i].update();
+        for(int i = 0; i < spiderCount; i++){
+            pmain.lives += s[i].update();
         }
-        */
 
         Rectangle mouseBox = {float(GetMouseX()), float(GetMouseY()), 20, 20};
        //----------------------------------------------------------------------------------
         BeginDrawing();
             ClearBackground(RAYWHITE);
             DrawRectangleRec(mouseBox, RED);
-
-              for(int i = 0; i < int(sizeof(a)); i++){ 
+           
+              for(int i = 0; i < amethystCount; i++){ 
                 a[i].drawCollisionBox();
                 a[i].drawTexture();
             }
-            /*
-              for(int i = 0; i < int(sizeof(s)); i++){ 
+            for(int i = 0; i < spiderCount; i++){ 
                 s[i].drawCollisionBox();
                 s[i].drawTexture();
             }
-                */
-            std::cout << pmain.cash; 
             
-            DrawText(TextFormat("lives: %i", pmain.lives), 300, 300,20, RED);
+            DrawText(TextFormat("lives: %i", pmain.lives), 400, 300,20, RED);
             DrawText(TextFormat("cash: %i", pmain.cash), 300, 300,20, RED);
         EndDrawing();
         //----------------------------------------------------------------------------------/** */
     }
-
-    for(int i = 0; i < int(sizeof(a)) - 1; i++){
-        a[i].~amethyst();
-    }
-    /*
-    for(int i = 0; i < int(sizeof(s)) - 1; i++){
-        s[i].~spider();
-    }
-        */
-    // De-Initialization
+    amethyst::unloadTextures();
+    spider::unloadTextures();
     //--------------------------------------------------------------------------------------
 }
 
