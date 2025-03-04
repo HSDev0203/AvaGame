@@ -26,27 +26,49 @@
 *
 ********************************************************************************************/
 #include "raylib.h"
+#include "vector"
 #include "iostream"
+#include "random" 
 #include <spider.hpp>
 #include <amethyst.hpp>
+#include <diamond.hpp>
 #include <player.hpp>
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
 
-void level_1(){
+
+
+
+int main(void)
+{
+
+    // Initialization
+    //--------------------------------------------------------------------------------------
+    const int screenWidth = 800;
+    const int screenHeight = 450;
+
+
+
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     player pmain;
     pmain.cash = 0;
     
     amethyst::loadTextures();
+    diamond::loadTextures();
+    
     amethyst a[] = {
-        amethyst(Vector2{100, 100}), amethyst(Vector2{200, 100}),
-        amethyst(Vector2{100, 200}), amethyst(Vector2{200, 200}),
-        amethyst(Vector2{100, 300}), amethyst(Vector2({200, 300})),
-
+        amethyst({Vector2{100, 100}}),
+        amethyst(Vector2{100, 200}),
+        amethyst(Vector2{100, 300}),
     };
+    diamond d[] ={
+        diamond(Vector2{200, 100}),
+        diamond(Vector2{200, 200}),    
+        diamond(Vector2{200, 300}),    
+    };
+    int diamondCount = sizeof(d) / sizeof(d[0]);
     int amethystCount = sizeof(a) / sizeof(a[0]);
-
     
     spider::loadTextures();
     spider s[] = {
@@ -63,6 +85,9 @@ void level_1(){
         for(int i = 0; i < amethystCount; i++){
             pmain.cash += a[i].update();
         }
+        for(int i = 0; i < diamondCount; i++){
+            pmain.cash += d[i].update();
+        }
         for(int i = 0; i < spiderCount; i++){
             pmain.lives += s[i].update();
         }
@@ -73,9 +98,13 @@ void level_1(){
             ClearBackground(RAYWHITE);
             DrawRectangleRec(mouseBox, RED);
            
-              for(int i = 0; i < amethystCount; i++){ 
+            for(int i = 0; i < amethystCount; i++){ 
                 a[i].drawCollisionBox();
                 a[i].drawTexture();
+            }
+            for(int i = 0; i < diamondCount; i++){ 
+                d[i].drawCollisionBox();
+                d[i].drawTexture();
             }
             for(int i = 0; i < spiderCount; i++){ 
                 s[i].drawCollisionBox();
@@ -89,22 +118,14 @@ void level_1(){
     }
     amethyst::unloadTextures();
     spider::unloadTextures();
+    diamond::unloadTextures();
+    /*
+    for(int i = 0; i < int(sizeof(s)) - 1; i++){
+        s[i].~spider();
+    }
+        */
+    // De-Initialization
     //--------------------------------------------------------------------------------------
-}
-
-
-int main(void)
-{
-
-    // Initialization
-    //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
-
-
-
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-    level_1();
 
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
