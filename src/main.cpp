@@ -33,6 +33,7 @@
 #include <amethyst.hpp>
 #include <diamond.hpp>
 #include <player.hpp>
+#include <game_utils.hpp>
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
@@ -56,24 +57,32 @@ int main(void)
     
     amethyst::loadTextures();
     diamond::loadTextures();
+
+    std::vector<Vector2> p = {
+        Vector2{100, 100}, Vector2{200, 100}, Vector2{300, 100},
+        Vector2{100, 200}, Vector2{200, 200}, Vector2{300, 200},
+        Vector2{100, 300}, Vector2{200, 300}, Vector2{300, 300}
+    };
+
+
+    p = shuffle_positions(p);
+
+    std::cout << "Position" << p[4].x;
     
     amethyst a[] = {
-        amethyst({Vector2{100, 100}}),
-        amethyst(Vector2{100, 200}),
-        amethyst(Vector2{100, 300}),
+        amethyst(p[0]), amethyst(p[1]), amethyst(p[2])
     };
     diamond d[] ={
-        diamond(Vector2{200, 100}),
-        diamond(Vector2{200, 200}),    
-        diamond(Vector2{200, 300}),    
+        diamond(Vector2{500, 100})   
     };
     int diamondCount = sizeof(d) / sizeof(d[0]);
     int amethystCount = sizeof(a) / sizeof(a[0]);
     
     spider::loadTextures();
     spider s[] = {
-        spider(Vector2{300, 100}),
+        spider(p[4])
     };
+    
     int spiderCount = sizeof(s) / sizeof(s[0]);
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
