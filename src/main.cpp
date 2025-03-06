@@ -34,11 +34,14 @@
 #include <diamond.hpp>
 #include <player.hpp>
 #include <game_utils.hpp>
+#include <button.hpp>
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
 
-
+void printThing(){
+    std::cout << "hi";
+}
 
 
 int main(void)
@@ -54,6 +57,8 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     player pmain;
     pmain.cash = 0;
+
+    button b = button(Rectangle{500, 200, 50, 50}, BLUE, *printThing);
     
     amethyst::loadTextures();
     diamond::loadTextures();
@@ -66,8 +71,6 @@ int main(void)
 
 
     p = shuffle_positions(p);
-
-    std::cout << "Position" << p[4].x;
     
     amethyst a[] = {
         amethyst(p[0]), amethyst(p[1]), amethyst(p[2])
@@ -85,12 +88,18 @@ int main(void)
     
     int spiderCount = sizeof(s) / sizeof(s[0]);
 
+
+    int framesCounter = 0;
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
+        b.update();
+        framesCounter++;
+        int seconds = (framesCounter / 60);
+        
         for(int i = 0; i < amethystCount; i++){
             pmain.cash += a[i].update();
         }
@@ -106,7 +115,7 @@ int main(void)
         BeginDrawing();
             ClearBackground(RAYWHITE);
             DrawRectangleRec(mouseBox, RED);
-           
+            b.draw();
             for(int i = 0; i < amethystCount; i++){ 
                 a[i].drawCollisionBox();
                 a[i].drawTexture();
@@ -122,17 +131,13 @@ int main(void)
             
             DrawText(TextFormat("lives: %i", pmain.lives), 400, 300,20, RED);
             DrawText(TextFormat("cash: %i", pmain.cash), 300, 300,20, RED);
+            DrawText(TextFormat("time: %i", seconds), 200, 300,20, RED);
         EndDrawing();
         //----------------------------------------------------------------------------------/** */
     }
     amethyst::unloadTextures();
     spider::unloadTextures();
     diamond::unloadTextures();
-    /*
-    for(int i = 0; i < int(sizeof(s)) - 1; i++){
-        s[i].~spider();
-    }
-        */
     // De-Initialization
     //--------------------------------------------------------------------------------------
 
