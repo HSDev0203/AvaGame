@@ -1,8 +1,6 @@
 #include <amethyst.hpp>
 #include "player.hpp"
 
-
-
 static Texture2D gemTexture;   
 static Texture2D geodeTexture;
 
@@ -26,7 +24,8 @@ int amethyst::update(){
     }
     return 0;
 }
- void amethyst::unloadTextures(){
+
+void amethyst::unloadTextures(){
     UnloadTexture(gemTexture);
     UnloadTexture(geodeTexture);
 }

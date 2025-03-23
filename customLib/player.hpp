@@ -8,5 +8,7 @@ class player{
         void update();
             
         int cash;
+        int cashGoal;
         int lives = 3;
+        int level = 1;
 };
