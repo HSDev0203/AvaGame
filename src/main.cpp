@@ -8,6 +8,7 @@
 #include <diamond.hpp>
 #include <player.hpp>
 #include <game_utils.hpp>
+#include <animator.hpp>
 #include <button_functions.hpp>
 #include <button.hpp>
 //------------------------------------------------------------------------------------
@@ -28,6 +29,9 @@ std::vector<diamond> d;
 
 std::vector<spider> s;
 
+std::vector<Animator> anim;
+
+Texture2D main_screen;
 
 int level_cash_req;
 int level_seconds;
@@ -39,9 +43,17 @@ bool init = true;
 
 void loadLevel(){
     if(level == "level_1" && init == true){
+
+        main_screen = LoadTexture("../resources/gfx/Thingy.png");
+        
+        for(int i = 0; i < (int)anim.size(); i++){ 
+            anim[i].initFrame();
+        }
+
         p = generate_positions(p, 7, 0, 0);
         p = shuffle_positions(p);
         a = {p[0]}; 
+        anim = {Animator(Vector2{0,0}, main_screen, 2)};
         init = false;
     }
     if(level == "level_2" && init == true){
@@ -67,6 +79,9 @@ void updateLevel(){
         for(int i = 0; i < (int)s.size(); i++){
             pmain.lives += s[i].update();
         }
+        for(int i = 0; i < (int)anim.size(); i++){
+            anim[i].update();
+        }
         
     }
     else if(level == "level_2"){
@@ -88,8 +103,8 @@ void updateLevel(){
 void drawLevel(){
 
     Rectangle mouseBox = {float(GetMouseX()) - 10, float(GetMouseY()) - 10, 20, 20};
+
     BeginDrawing();
-    ClearBackground(RAYWHITE);
     DrawRectangleRec(mouseBox, RED);
 
     for(int i = 0; i < (int)a.size(); i++){ 
@@ -105,10 +120,13 @@ void drawLevel(){
         s[i].drawTexture();
     }
     for(int i = 0; i < (int)p.size(); i++){
-        DrawRectangle(p[i].x, p[i].y, 50, 50, RED );
+        DrawRectangle(p[i].x + 50, p[i].y + 50, 50, 50, RED );
     }
-    
+    for(int i = 0; i < (int)anim.size(); i++){ 
+        anim[i].playSpriteSheet(1);
+    }
 
+    ClearBackground(RAYWHITE);
     
     DrawText(TextFormat("lives: %i", pmain.lives), 500, 800,20, RED);
     DrawText(TextFormat("cash: %i", pmain.cash), 400, 800,20, RED);
@@ -139,14 +157,14 @@ int main(void)
     // Detect window close button or ESC key
        
     while(!WindowShouldClose()){
-        loadLevel();
+        loadLevel(); 
         updateLevel();
         drawLevel();
-            
     }
     amethyst::unloadTextures();
     spider::unloadTextures();
     diamond::unloadTextures();
+    UnloadTexture(main_screen);
     // De-Initialization
     //--------------------------------------------------------------------------------------
 

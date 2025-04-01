@@ -9,12 +9,9 @@ amethyst::amethyst(Vector2 pos){
         isGem = false;
         position = pos;
         currentTexture = geodeTexture;
-        collisionBox = {position.x, position.y, 50, 50};
-
+        collisionBox = {position.x + 50, position.y + 50, 50, 50};
     }
 int amethyst::update(){
-    collisionBox.x = position.x;
-    collisionBox.y = position.y;
     if(IsMouseButtonPressed(0)){
         if(CheckCollisionRecs(collisionBox, Rectangle{float(GetMouseX()), float(GetMouseY()), 20, 20}) && !isGem){
             currentTexture = gemTexture;
