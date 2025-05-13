@@ -43,9 +43,8 @@ bool init = true;
 
 void loadLevel(){
     if(level == "level_1" && init == true){
-
-        main_screen = LoadTexture("../resources/gfx/Thingy.png");
         
+        anim = {Animator(Vector2{0,0}, main_screen, 87)};
         for(int i = 0; i < (int)anim.size(); i++){ 
             anim[i].initFrame();
         }
@@ -53,7 +52,6 @@ void loadLevel(){
         p = generate_positions(p, 7, 0, 0);
         p = shuffle_positions(p);
         a = {p[0]}; 
-        anim = {Animator(Vector2{0,0}, main_screen, 2)};
         init = false;
     }
     if(level == "level_2" && init == true){
@@ -69,7 +67,7 @@ void updateLevel(){
         framesCounter++;
         seconds_elapsed = (framesCounter / 60);
         seconds_left = level_seconds - seconds_elapsed;
-        
+
         for(int i = 0; i < (int)a.size(); i++){
             pmain.cash += a[i].update();
         }
@@ -80,8 +78,9 @@ void updateLevel(){
             pmain.lives += s[i].update();
         }
         for(int i = 0; i < (int)anim.size(); i++){
-            anim[i].update();
+            anim[i].update(1);
         }
+       
         
     }
     else if(level == "level_2"){
@@ -98,6 +97,9 @@ void updateLevel(){
         for(int i = 0; i < (int)s.size(); i++){
             pmain.lives += s[i].update();
         }
+        for(int i = 0; i < (int)anim.size(); i++){
+            anim[i].update(1);
+        }
     } 
 }
 void drawLevel(){
@@ -106,7 +108,7 @@ void drawLevel(){
 
     BeginDrawing();
     DrawRectangleRec(mouseBox, RED);
-
+   
     for(int i = 0; i < (int)a.size(); i++){ 
         a[i].drawCollisionBox();
         a[i].drawTexture();
@@ -122,9 +124,11 @@ void drawLevel(){
     for(int i = 0; i < (int)p.size(); i++){
         DrawRectangle(p[i].x + 50, p[i].y + 50, 50, 50, RED );
     }
-    for(int i = 0; i < (int)anim.size(); i++){ 
-        anim[i].playSpriteSheet(1);
+    for(int i = 0; i < (int)anim.size(); i++){
+        anim[i].playSpriteSheet();
     }
+
+    
 
     ClearBackground(RAYWHITE);
     
@@ -145,6 +149,7 @@ int main(void)
     
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
   
+    main_screen = LoadTexture("../resources/gfx/start_screen-sheet.png");
 
     amethyst::loadTextures();
     diamond::loadTextures();

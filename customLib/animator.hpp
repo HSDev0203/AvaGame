@@ -8,8 +8,8 @@ class Animator{
         Texture2D tex;
         int imageCount;
         Animator(Vector2 pos, Texture2D tex, int imageCount);
-        void playSpriteSheet(int speed);
-        void update();
+        void playSpriteSheet();
+        void update(int speed);
         void initFrame();
 
     private:

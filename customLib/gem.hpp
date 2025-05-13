@@ -13,7 +13,6 @@ public:
     Vector2 position;
     
 protected:
-
     int value;
     bool isGem;
     Texture2D currentTexture;
