@@ -14,5 +14,5 @@ public:
     int update();
     static void unloadTextures();
     static void loadTextures();
-    Amethyst(Vector2 pPos);
+    Amethyst(Vector2 pos);
 };

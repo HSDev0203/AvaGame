@@ -9,7 +9,7 @@ class Animator{
         int imageCount;
         Animator(Vector2 pos, Texture2D tex, int imageCount);
         void playSpriteSheet();
-        void update(int pSpeed);
+        void update(int speed);
         void initFrame();
 
     private:
