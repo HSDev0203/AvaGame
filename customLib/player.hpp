@@ -3,12 +3,8 @@
 #pragma once
 
 
-class player{
+class Player{
     public:
         void update();
-            
-        int cash;
-        int cashGoal;
-        int lives = 3;
-        int level = 1;
+        int cash, cashGoal, lives = 3, level = 1;
 };

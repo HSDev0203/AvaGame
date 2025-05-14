@@ -6,7 +6,7 @@
 
 #pragma once
 
-class amethyst: public gem
+class Amethyst: public Gem
 {
 private:
 
@@ -14,5 +14,5 @@ public:
     int update();
     static void unloadTextures();
     static void loadTextures();
-    amethyst(Vector2 pos);
+    Amethyst(Vector2 pPos);
 };

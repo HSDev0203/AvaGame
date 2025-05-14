@@ -6,7 +6,7 @@
 
 #pragma once
 
-class spider: public gem
+class Spider: public Gem
 {
 private:
 
@@ -14,5 +14,5 @@ public:
     int update();
     static void unloadTextures();
     static void loadTextures();
-    spider(Vector2 pos);
+    Spider(Vector2 pos);
 };

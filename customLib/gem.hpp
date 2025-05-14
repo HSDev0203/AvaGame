@@ -4,7 +4,7 @@
 
 #pragma once
 
-class gem
+class Gem
 {
 
 public:

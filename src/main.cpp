@@ -14,7 +14,7 @@
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
-player pmain;
+Player pmain;
 
 std::vector<Vector2> p;
 std::string level = "level_1";
@@ -23,11 +23,11 @@ std::string level = "level_1";
 
 
 
-std::vector<amethyst> a;  
+std::vector<Amethyst> a;  
 
-std::vector<diamond> d;
+std::vector<Diamond> d;
 
-std::vector<spider> s;
+std::vector<Spider> s;
 
 std::vector<Animator> anim;
 
@@ -44,19 +44,19 @@ bool init = true;
 void loadLevel(){
     if(level == "level_1" && init == true){
         
-        anim = {Animator(Vector2{0,0}, main_screen, 87)};
+        anim = {Animator(Vector2{0,0}, main_screen, 1)};
         for(int i = 0; i < (int)anim.size(); i++){ 
             anim[i].initFrame();
         }
 
-        p = generate_positions(p, 7, 0, 0);
-        p = shuffle_positions(p);
+        p = generatePositions(p, 7, 0, 0);
+        p = shufflePositions(p);
         a = {p[0]}; 
         init = false;
     }
     if(level == "level_2" && init == true){
-        p = generate_positions(p, 81, 100, 0);
-        p = shuffle_positions(p);
+        p = generatePositions(p, 81, 100, 0);
+        p = shufflePositions(p);
         a = {p[0]};
         init = false;
     }
@@ -149,11 +149,11 @@ int main(void)
     
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
   
-    main_screen = LoadTexture("../resources/gfx/start_screen-sheet.png");
+    main_screen = LoadTexture("../resources/gfx/scarfy.png");
 
-    amethyst::loadTextures();
-    diamond::loadTextures();
-    spider::loadTextures();
+    Amethyst::loadTextures();
+    Diamond::loadTextures();
+    Spider::loadTextures();
     
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -166,9 +166,9 @@ int main(void)
         updateLevel();
         drawLevel();
     }
-    amethyst::unloadTextures();
-    spider::unloadTextures();
-    diamond::unloadTextures();
+    Amethyst::unloadTextures();
+    Spider::unloadTextures();
+    Diamond::unloadTextures();
     UnloadTexture(main_screen);
     // De-Initialization
     //--------------------------------------------------------------------------------------

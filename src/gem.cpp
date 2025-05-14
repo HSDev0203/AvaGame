@@ -5,11 +5,11 @@
 
 
 
-void gem::drawTexture(){
+void Gem::drawTexture(){
     DrawTextureV(currentTexture, position, WHITE);
     return;
 }
 
-void gem::drawCollisionBox(){
+void Gem::drawCollisionBox(){
     DrawRectangle(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height, RED);
 }

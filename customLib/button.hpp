@@ -1,12 +1,12 @@
 #include "raylib.h"
 
-class button{
+class Button{
     public:
         Rectangle rec;
         Color col;
-        button(Rectangle rec, Color col, void (*callback)());
+        Button(Rectangle pRec, Color pCol, void (*pCallBack)());
         void draw();
         void update();
     private:
-        void (*callback)();
+        void (*CallBack)();
 };

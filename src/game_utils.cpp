@@ -1,21 +1,21 @@
 #include <game_utils.hpp>
 #include "iostream"
 
-std::vector<Vector2> shuffle_positions(std::vector<Vector2> arr){
+std::vector<Vector2> shufflePositions(std::vector<Vector2> arr){
     srand(time(0));
-    int last_index = arr.size() - 1;
+    int lastIndex = arr.size() - 1;
     
-    while (last_index > 0){
-        int rand_index = rand() % last_index;
-        Vector2 temp = arr[last_index];
-        arr[last_index] = arr[rand_index];
-        arr[rand_index] = temp;
-        last_index -= 1;
+    while (lastIndex > 0){
+        int randIndex = rand() % lastIndex;
+        Vector2 temp = arr[lastIndex];
+        arr[lastIndex] = arr[randIndex];
+        arr[randIndex] = temp;
+        lastIndex -= 1;
     }
     return arr;
 }
 
-std::vector<Vector2> generate_positions(std::vector<Vector2> arr, int size, int offset_x = 0, int offset_y = 0){
+std::vector<Vector2> generatePositions(std::vector<Vector2> arr, int size, int offset_x = 0, int offset_y = 0){
     int x = 1;
     int y = 1; 
     
@@ -26,6 +26,6 @@ std::vector<Vector2> generate_positions(std::vector<Vector2> arr, int size, int 
         if(x >= size){ y++;  x = 1;}else{x++;}
         arr.push_back(v);
     }
-    arr = shuffle_positions(arr);
+    arr = shufflePositions(arr);
     return arr;
 }

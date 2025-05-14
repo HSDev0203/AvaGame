@@ -6,15 +6,15 @@
 static Texture2D gemTexture;   
 static Texture2D geodeTexture;
 
-    spider::spider(Vector2 pos){  
-        value = -1;
-        isGem = false;
-        position = pos;
-        currentTexture = geodeTexture;
-        collisionBox = {position.x, position.y, 50, 50};
+Spider::Spider(Vector2 pos){  
+    value = -1;
+    isGem = false;
+    position = pos;
+    currentTexture = geodeTexture;
+    collisionBox = {position.x, position.y, 50, 50};
 
-    }
-int spider::update(){
+}
+int Spider::update(){
     collisionBox.x = position.x;
     collisionBox.y = position.y;
     if(IsMouseButtonPressed(0)){
@@ -26,12 +26,12 @@ int spider::update(){
     }
     return 0;
 }
- void spider::unloadTextures(){
+ void Spider::unloadTextures(){
     UnloadTexture(gemTexture);
     UnloadTexture(geodeTexture);
 }
 
-void spider::loadTextures(){
+void Spider::loadTextures(){
     gemTexture = LoadTexture("../resources/gfx/scarfy.png");
     geodeTexture = LoadTexture("../resources/gfx/Gun.png");
 }

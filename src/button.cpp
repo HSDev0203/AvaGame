@@ -1,18 +1,18 @@
 #include "button.hpp"
 
-button::button(Rectangle rec, Color col, void (*callback)()){
-    button::rec = rec;
-    button::col = col;
-    button::callback = callback;
+Button::Button(Rectangle pRec, Color pCol, void (*pCallBack)()){
+    Button::rec = pRec;
+    Button::col = pCol;
+    Button::CallBack = pCallBack;
 };
 
-void button::draw(){
+void Button::draw(){
     DrawRectangleRec(rec, col);
 }
-void button::update(){
+void Button::update(){
     if(IsMouseButtonPressed(0)){
         if(CheckCollisionRecs(rec, Rectangle{float(GetMouseX()), float(GetMouseY()), 20, 20})){
-            callback();
+            CallBack();
         }
     }
 }

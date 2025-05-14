@@ -1,5 +1,5 @@
 #include "player.hpp"
 
-void player::update(){
+void Player::update(){
     return;
 };

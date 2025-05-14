@@ -6,7 +6,7 @@
 
 #pragma once
 
-class diamond: public gem
+class Diamond: public Gem
 {
 private:
 
@@ -14,5 +14,5 @@ public:
     int update();
     static void unloadTextures();
     static void loadTextures();
-    diamond(Vector2 pos);
+    Diamond(Vector2 pos);
 };

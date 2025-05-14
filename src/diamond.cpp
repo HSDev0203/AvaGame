@@ -6,15 +6,15 @@
 static Texture2D gemTexture;   
 static Texture2D geodeTexture;
 
-diamond::diamond(Vector2 pos){  
+Diamond::Diamond(Vector2 pPos){  
         value = 20;
         isGem = false;
-        position = pos;
+        position = pPos;
         currentTexture = geodeTexture;
         collisionBox = {position.x, position.y, 50, 50};
 
     }
-int diamond::update(){
+int Diamond::update(){
     collisionBox.x = position.x;
     collisionBox.y = position.y;
     if(IsMouseButtonPressed(0)){
@@ -26,12 +26,12 @@ int diamond::update(){
     }
     return 0;
 }
- void diamond::unloadTextures(){
+ void Diamond::unloadTextures(){
     UnloadTexture(gemTexture);
     UnloadTexture(geodeTexture);
 }
 
-void diamond::loadTextures(){
+void Diamond::loadTextures(){
     gemTexture = LoadTexture("../resources/gfx/Box.png");
     geodeTexture = LoadTexture("../resources/gfx/Zombie.png");
 }
