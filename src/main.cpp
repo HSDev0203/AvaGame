@@ -44,7 +44,7 @@ bool init = true;
 void loadLevel(){
     if(level == "level_1" && init == true){
         
-        anim = {Animator(Vector2{0,0}, main_screen, 1)};
+        anim = {Animator(Vector2{0,0}, main_screen, 87, 10)};
         for(int i = 0; i < (int)anim.size(); i++){ 
             anim[i].initFrame();
         }
@@ -78,7 +78,7 @@ void updateLevel(){
             pmain.lives += s[i].update();
         }
         for(int i = 0; i < (int)anim.size(); i++){
-            anim[i].update(1);
+            anim[i].update(10);
         }
        
         
@@ -149,7 +149,7 @@ int main(void)
     
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
   
-    main_screen = LoadTexture("../resources/gfx/scarfy.png");
+    main_screen = LoadTexture("../resources/gfx/start_screen-sheet.png");
 
     Amethyst::loadTextures();
     Diamond::loadTextures();

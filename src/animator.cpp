@@ -1,10 +1,11 @@
 #include <animator.hpp>
 
 
-Animator::Animator(Vector2 pPos, Texture2D pTex, int pImageCount){  
+Animator::Animator(Vector2 pPos, Texture2D pTex, int pImageCount, int pScale = 1){  
     pos = pPos;
     tex = pTex;  
     imageCount = pImageCount;
+    scale = pScale;
 }
 void Animator::update(int pSpeed){
     mFrameCounter++;
@@ -23,7 +24,7 @@ void Animator::initFrame(){
 }
 
 void Animator::playSpriteSheet(){
-    DrawTextureRec(tex, mFrame, pos, WHITE);
+    DrawTexturePro(tex, mFrame, Rectangle{0.0f, 0.0f, mFrame.width * scale, mFrame.height * scale}, pos, 0, WHITE );
 }
 
 
