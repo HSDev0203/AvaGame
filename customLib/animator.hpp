@@ -8,14 +8,16 @@ class Animator{
         Texture2D tex;
         int imageCount;
         int scale;
-        Animator(Vector2 pos, Texture2D tex, int imageCount, int scale);
-        void playSpriteSheet();
-        void update(int speed);
+        Animator(Vector2 pos, Texture2D tex, int imageCount, int scale, void (*onFinished)());
+        void playSpriteSheet(int speed);
+        void playSpriteSheetOnce(int speed);
         void initFrame();
-
+        
     private:
         int mFrameCounter = 0;
-        int mCurrentFrame;
+        int mCurrentFrame = 0;
+        void (*mOnFinished)();
+        bool shouldStop;
         Rectangle mFrame;
 
 };

@@ -7,7 +7,7 @@
                 "${workspaceFolder}/customLib",
                 "${workspaceFolder}/include/",
                 "${workspaceFolder}/src",
-                "${workspaceFolder}/lib"
+                "${workspaceFolder}/lib/"
             ],
             "defines": [
                 "_DEBUG",

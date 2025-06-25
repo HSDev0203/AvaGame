@@ -29,3 +29,7 @@ std::vector<Vector2> generatePositions(std::vector<Vector2> arr, int size, int o
     arr = shufflePositions(arr);
     return arr;
 }
+
+void nullFunction(){
+    return;
+}

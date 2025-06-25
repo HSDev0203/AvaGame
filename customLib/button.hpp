@@ -8,5 +8,5 @@ class Button{
         void draw();
         void update();
     private:
-        void (*CallBack)();
+        void (*mCallBack)();
 };

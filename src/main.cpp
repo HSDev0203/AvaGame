@@ -1,4 +1,3 @@
-
 #include "raylib.h"
 #include "vector"
 #include "iostream"
@@ -17,7 +16,7 @@
 Player pmain;
 
 std::vector<Vector2> p;
-std::string level = "level_1";
+std::string level = "title_screen";
 
 //generate positions in a square grid
 
@@ -29,9 +28,14 @@ std::vector<Diamond> d;
 
 std::vector<Spider> s;
 
-std::vector<Animator> anim;
+Texture2D transitionSheet;
 
-Texture2D main_screen;
+Texture2D mainScreenSheet;
+
+Animator transitionAnim = Animator(Vector2{0,0}, transitionSheet, 50, 10, nullFunction);
+
+Animator mainAnim = Animator(Vector2{0,0}, mainScreenSheet, 87, 10, nullFunction); 
+
 
 int level_cash_req;
 int level_seconds;
@@ -41,49 +45,69 @@ int seconds_elapsed;
 int seconds_left;
 bool init = true;
 
+
+void switchLevel(std::string level){
+    
+}
+
 void loadLevel(){
+    if (level == "title_screen" && init == true){
+
+        transitionAnim = Animator(Vector2{0,0}, transitionSheet, 50, 10, setLevelTest);
+        mainAnim = Animator(Vector2{0,0}, mainScreenSheet, 87, 10, nullFunction); 
+
+        transitionAnim.initFrame();
+        mainAnim.initFrame();
+
+        init = false;
+    }
     if(level == "level_1" && init == true){
         
-        anim = {Animator(Vector2{0,0}, main_screen, 87, 10)};
-        for(int i = 0; i < (int)anim.size(); i++){ 
-            anim[i].initFrame();
-        }
+        mainAnim.initFrame();
+        transitionAnim.initFrame();
 
         p = generatePositions(p, 7, 0, 0);
         p = shufflePositions(p);
         a = {p[0]}; 
+        
         init = false;
     }
     if(level == "level_2" && init == true){
+        
         p = generatePositions(p, 81, 100, 0);
         p = shufflePositions(p);
         a = {p[0]};
+        
         init = false;
+    }
+    if(level == "test" && init == true){
+        
+        init = false;
+
     }
 }
 
 void updateLevel(){
+   
     if(level == "level_1"){
         framesCounter++;
         seconds_elapsed = (framesCounter / 60);
         seconds_left = level_seconds - seconds_elapsed;
 
         for(int i = 0; i < (int)a.size(); i++){
+
             pmain.cash += a[i].update();
+
         }
         for(int i = 0; i < (int)d.size(); i++){
             pmain.cash += d[i].update();
         }
         for(int i = 0; i < (int)s.size(); i++){
             pmain.lives += s[i].update();
-        }
-        for(int i = 0; i < (int)anim.size(); i++){
-            anim[i].update(10);
-        }
-       
+        }   
         
     }
-    else if(level == "level_2"){
+    if(level == "level_2"){
         framesCounter++;
         seconds_elapsed = (framesCounter / 60);
         seconds_left = level_seconds - seconds_elapsed;
@@ -97,44 +121,84 @@ void updateLevel(){
         for(int i = 0; i < (int)s.size(); i++){
             pmain.lives += s[i].update();
         }
-        for(int i = 0; i < (int)anim.size(); i++){
-            anim[i].update(1);
-        }
-    } 
+    }
+
+    if(level == "title_screen"){
+        framesCounter++;
+        seconds_elapsed = (framesCounter / 60);
+        seconds_left = level_seconds - seconds_elapsed;
+    
+    }
+
+    if(level == "test"){
+        framesCounter++;
+        seconds_elapsed = (framesCounter / 60);
+        seconds_left = level_seconds - seconds_elapsed;
+        
+    }
+
 }
 void drawLevel(){
 
-    Rectangle mouseBox = {float(GetMouseX()) - 10, float(GetMouseY()) - 10, 20, 20};
-
     BeginDrawing();
-    DrawRectangleRec(mouseBox, RED);
+    
+    if(level == "level_1"){
+        
+        for(int i = 0; i < (int)a.size(); i++){ 
+            a[i].drawCollisionBox();
+            a[i].drawTexture();
+        }
+       
+        for(int i = 0; i < (int)d.size(); i++){ 
+            d[i].drawCollisionBox();
+            d[i].drawTexture();
+        }
+     
+        for(int i = 0; i < (int)s.size(); i++){ 
+            s[i].drawCollisionBox();
+            s[i].drawTexture();
+        }
    
-    for(int i = 0; i < (int)a.size(); i++){ 
-        a[i].drawCollisionBox();
-        a[i].drawTexture();
-    }
-    for(int i = 0; i < (int)d.size(); i++){ 
-        d[i].drawCollisionBox();
-        d[i].drawTexture();
-    }
-    for(int i = 0; i < (int)s.size(); i++){ 
-        s[i].drawCollisionBox();
-        s[i].drawTexture();
-    }
-    for(int i = 0; i < (int)p.size(); i++){
-        DrawRectangle(p[i].x + 50, p[i].y + 50, 50, 50, RED );
-    }
-    for(int i = 0; i < (int)anim.size(); i++){
-        anim[i].playSpriteSheet();
+        for(int i = 0; i < (int)p.size(); i++){
+            DrawRectangle(p[i].x + 50, p[i].y + 50, 50, 50, RED );
+        }
+        DrawText(TextFormat("lives: %i", pmain.lives), 500, 800,20, RED);
+        DrawText(TextFormat("cash: %i", pmain.cash), 400, 800,20, RED);
+        DrawText(TextFormat("time: %i", seconds_elapsed), 300, 800,20, RED);
+
     }
 
+    if(level == "level_2"){
+        for(int i = 0; i < (int)a.size(); i++){ 
+            a[i].drawCollisionBox();
+            a[i].drawTexture();
+        }
+        for(int i = 0; i < (int)d.size(); i++){ 
+            d[i].drawCollisionBox();
+            d[i].drawTexture();
+        }
+        for(int i = 0; i < (int)s.size(); i++){ 
+            s[i].drawCollisionBox();
+            s[i].drawTexture();
+        }
+        for(int i = 0; i < (int)p.size(); i++){
+            DrawRectangle(p[i].x + 50, p[i].y + 50, 50, 50, RED );
+        }
+
+    }
     
+    if(level == "title_screen"){
+        mainAnim.playSpriteSheet(30);
+        if(IsKeyPressed(KEY_ENTER)){
+            init = true;
+        }
+        DrawText("Press Enter to Start!", 300, 800,20, PURPLE);
+
+    }
+    if(level == "test"){
+    }
 
     ClearBackground(RAYWHITE);
-    
-    DrawText(TextFormat("lives: %i", pmain.lives), 500, 800,20, RED);
-    DrawText(TextFormat("cash: %i", pmain.cash), 400, 800,20, RED);
-    DrawText(TextFormat("time: %i", seconds_elapsed), 300, 800,20, RED);
     EndDrawing();
 
 }
@@ -149,7 +213,8 @@ int main(void)
     
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
   
-    main_screen = LoadTexture("../resources/gfx/start_screen-sheet.png");
+    mainScreenSheet = LoadTexture("../resources/gfx/start_screen-sheet.png");
+    transitionSheet = LoadTexture("../resources/gfx/transition.png");
 
     Amethyst::loadTextures();
     Diamond::loadTextures();
@@ -169,7 +234,8 @@ int main(void)
     Amethyst::unloadTextures();
     Spider::unloadTextures();
     Diamond::unloadTextures();
-    UnloadTexture(main_screen);
+    UnloadTexture(mainScreenSheet);
+    UnloadTexture(transitionSheet);
     // De-Initialization
     //--------------------------------------------------------------------------------------
 
